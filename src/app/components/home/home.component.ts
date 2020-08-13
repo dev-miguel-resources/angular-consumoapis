@@ -12,9 +12,22 @@ import { Subject, Subscription } from 'rxjs';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.sass'],
   animations: [
-
-  ]
-
+    trigger('listAnimation', [
+      transition('* => *', [
+        query(':leave', [
+          stagger(100, [
+            animate('0.5s', style({ opacity: 0 }))
+          ])
+        ], { optional: true }),
+        query(':enter', [
+          style({ opacity: 0}),
+          stagger(100, [
+            animate('0.5s', style({ opacity: 1 }))
+          ])
+        ], {optional: true })
+      ])
+    ])
+  ],
 })
 export class HomeComponent implements OnInit, OnDestroy {
 
@@ -61,7 +74,45 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   public getPopular(category: string) {
-    
+    this.movies = [];
+    this.movieService.getPopular(category)
+      .pipe(
+        take(1)
+      )
+      .subscribe(
+        res => {
+          this.moviesStorage = res.results;
+          this.movies = res.results.slice(0, this.viewCount);
+          console.log(this.movies);
+        },
+        err => {
+          console.log(err);
+        },
+        () => {
+          // petición finalizada
+        });
   }
 
+  getDataSearch(search: string) {
+    this.movies = [];
+    this.movieService.getSearch(search)
+      .pipe(
+        take(1)
+      )
+      .subscribe(
+        res => {
+          if (res.results.length === 0) {
+              this.message = 'no existen resultados para tú búsqueda';
+          }
+          this.moviesStorage = res.results;
+          this.movies = res.results.slice(0, this.viewCount);
+          console.log(this.movies);
+        },
+        err => {
+          console.log(err);
+        },
+        () => {
+          // petición finalizada
+        });
+  }
 }
