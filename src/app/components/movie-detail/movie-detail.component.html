@@ -9,16 +9,16 @@
         <img width="100%" src="https://image.tmdb.org/t/p/w300/{{movie.poster_path}}" alt="{{movie.poster_path}}">
     </div>
     <div class="col-8">
-        <h1>{{movie.title}}</h1>
-        <p>{{movie.overview}}</p>
-        <h2>Titulo original: {{movie.original_title}}</h2>
-        <h2 class="uk-text-muted">Popularidad: {{movie.popularity}}</h2>
-        <h2 class="uk-text-muted">Cantidad de votos: {{movie.vote_count}}</h2>
-        <h2 class="uk-text-muted">Promedio: {{movie.vote_average}}</h2>
-        <h2 class="uk-text-muted">Fecha lanzamiento: {{movie.release_date | date: 'medium'}}</h2>
+        <h1>{{ movie.title }}</h1>
+        <p>{{ movie.overview }}</p>
+        <h2>Titulo original: {{ movie.original_title}}</h2>
+        <h2 class="uk-text-muted">Popularidad: {{ movie.popularity }}</h2>
+        <h2 class="uk-text-muted">Cantidad de votos: {{ movie.vote_count }}</h2>
+        <h2 class="uk-text-muted">Promedio: {{ movie.vote_average }}</h2>
+        <h2 class="uk-text-muted">Fecha lanzamiento: {{ movie.release_date | date: 'medium' }}</h2>
     </div>
 </div>
 
 <div *ngIf="!movie">
-    Cargando...
+    Cargando ...
 </div>

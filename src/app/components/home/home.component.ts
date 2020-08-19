@@ -1,11 +1,12 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { trigger, transition, query, stagger, animate, style } from '@angular/animations';
-import { take } from 'rxjs/operators';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, OnDestroy  } from '@angular/core';
+import { trigger, transition, query, stagger, animate, style} from '@angular/animations';
+import {take} from 'rxjs/operators';
+import {ActivatedRoute} from '@angular/router';
 
-// Services and subscriptions
+// Servicios
 import { MovieService } from '../../services/movie.service';
-import { Subject, Subscription } from 'rxjs';
+import {Subject, Subscription} from 'rxjs';
+
 
 @Component({
   selector: 'app-home',
@@ -31,7 +32,7 @@ import { Subject, Subscription } from 'rxjs';
 })
 export class HomeComponent implements OnInit, OnDestroy {
 
-  // Declarations
+  // DECLARACIONES
   public viewCount = 9;
   public page = 0;
   public pageSize = 9;
@@ -63,10 +64,11 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.componentDestroyed.next(true);
-    this.componentDestroyed.complete();
-    this.subscriptionSearchData.unsubscribe();
+      this.componentDestroyed.next(true);
+      this.componentDestroyed.complete();
+      this.subscriptionSearchData.unsubscribe();
   }
+
 
   public changeViewMovie() {
     this.movies = [];
@@ -74,45 +76,45 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   public getPopular(category: string) {
-    this.movies = [];
-    this.movieService.getPopular(category)
-      .pipe(
-        take(1)
-      )
-      .subscribe(
-        res => {
-          this.moviesStorage = res.results;
-          this.movies = res.results.slice(0, this.viewCount);
-          console.log(this.movies);
-        },
-        err => {
-          console.log(err);
-        },
-        () => {
-          // petición finalizada
-        });
+      this.movies = [];
+      this.movieService.getPopular(category)
+        .pipe(
+          take(1)
+        )
+        .subscribe(
+          res => {
+            this.moviesStorage = res.results;
+            this.movies = res.results.slice(0, this.viewCount);
+            console.log(this.movies);
+          },
+          err => {
+            console.log(err);
+          },
+          () => {
+              //petición finalizada
+          });
   }
 
-  getDataSearch(search: string) {
-    this.movies = [];
-    this.movieService.getSearch(search)
-      .pipe(
-        take(1)
-      )
-      .subscribe(
-        res => {
-          if (res.results.length === 0) {
-              this.message = 'no existen resultados para tú búsqueda';
-          }
-          this.moviesStorage = res.results;
-          this.movies = res.results.slice(0, this.viewCount);
-          console.log(this.movies);
-        },
-        err => {
-          console.log(err);
-        },
-        () => {
-          // petición finalizada
-        });
+  public getDataSearch(search: string) {
+      this.movies = [];
+      this.movieService.getSearch(search)
+        .pipe(
+          take(1)
+        )
+        .subscribe(
+          res => {
+            if (res.results.length === 0 ) {
+              this.message = 'no existen resultados para tú busqueda';
+            }
+            this.moviesStorage = res.results;
+            this.movies = res.results.slice(0, this.viewCount);
+            console.log(this.movies);
+          },
+          err => {
+            console.log(err);
+          },
+          () => {
+              // petición finalizada
+          });
   }
 }

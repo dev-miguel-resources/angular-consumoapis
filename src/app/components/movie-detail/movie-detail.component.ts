@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
-
-// Services
-import { MovieService } from 'src/app/services/movie.service';
+import {Location} from '@angular/common';
+import { MovieService } from '../../services/movie.service';
 import { ActivatedRoute } from '@angular/router';
 import { take } from 'rxjs/operators';
 
@@ -13,8 +11,7 @@ import { take } from 'rxjs/operators';
 })
 export class MovieDetailComponent implements OnInit {
 
-  // Declarations
-  public movie = null;
+    public movie = null;
 
   constructor(
     public location: Location,
@@ -29,20 +26,20 @@ export class MovieDetailComponent implements OnInit {
   }
 
   public getMovieDetail(movieId: string) {
-    this.movieService.getMovieById(movieId)
-      .pipe(
-        take(1)
-      )
-      .subscribe(
-        res => {
-          this.movie = res;
-          console.log(this.movie);
-        },
-        err => {
-          console.log(err);
-        },
-        () => {
-          // petición finalizada
-        });
+      this.movieService.getMovieById(movieId)
+        .pipe(
+          take(1)
+        )
+        .subscribe(
+          res => {
+            this.movie = res;
+            console.log(this.movie);
+          },
+          err => {
+            console.log(err);
+          },
+          () => {
+              // petición finalizada
+          });
   }
 }
